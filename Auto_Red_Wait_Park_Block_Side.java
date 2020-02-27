@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Autonomous Opmode G2
  */
 
-@Autonomous(name="Auto_Red_Wait_Park_Park_Block_Side", group="Wired")
+@Autonomous(name="Auto_Red_Wait_Park_Block_Side", group="Wired")
 public class Auto_Red_Wait_Park_Block_Side extends AutoLinearAbstract {
 
     // Declare OpMode members specific to this Autonomous Opmode variant.

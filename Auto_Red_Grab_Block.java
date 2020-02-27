@@ -32,11 +32,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 
-// Autonomous Opmode G2
+/**
+ * Autonomous Opmode G2
+ */
 
-
-@Autonomous(name="Auto_Blue_Grab_Foundation", group="Wired")
-public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
+@Autonomous(name="Auto_Red_Grab_Block", group="Wired")
+public class Auto_Red_Grab_Block extends AutoLinearAbstract {
 
     // Declare OpMode members specific to this Autonomous Opmode variant.
 
@@ -51,11 +52,9 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
         super.runOpMode();
 
 
-        // Go straight to become paralell with blocks
-
-        driveTrain.goStraightToTarget(10, DRIVE_TRAIN_DEFAULT_SPEED);
+        driveTrain.goStraightToTarget(24, DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
-            telemetry.addLine("Wait - Moving to line up with center of foundation");
+            telemetry.addLine("Wait - Moving to line up with a block");
             driveTrainTelemetry();
             telemetry.update();
             if (Kill(28)) {
@@ -63,9 +62,19 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
             }
         }
 
-        driveTrain.StrafeRightToTarget(35, .25);
-        while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
-            telemetry.addLine("Wait - Strafing right to foundation");
+        scissorLift.goToAbsoluteDistance(SCISSOR_LIFT_PICK_POS,.5);
+
+        generalTimer.reset();
+        while (generalTimer.seconds() < 1) {
+            if (Kill(28)) {
+                break;
+            }
+        }
+
+        boxMover.goToAbsoluteDistance(BOX_MOVER_PICK_POS_OUT,.5);
+
+        while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
+            telemetry.addLine("XXX");
             driveTrainTelemetry();
             telemetry.update();
             if (Kill(28)) {
@@ -74,10 +83,25 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
         }
 
 
-        clawServoLeft.goToPosition(CLAW_SERVO_LEFT_DOWN,.02);
-        clawServoRight.goToPosition(CLAW_SERVO_RIGHT_DOWN,.02);
+        while (!boxMover.isMoveDone(BOX_MOVER_POSITION_ERROR)) {
+            telemetry.addLine("XXX");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
 
-
+        scissorLift.goToRelativeDistance(100,.5);
+        while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
+            telemetry.addLine("XXX");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
+        boxGrabber.goToPosition(BOX_GRABBER_CLOSED,.003);
 
         generalTimer.reset();
         while (generalTimer.seconds() < 2) {
@@ -86,9 +110,9 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
             }
         }
 
-        driveTrain.StrafeLeftToTarget(45, DRIVE_TRAIN_DEFAULT_SPEED);
+        driveTrain.goStraightToTarget(-10, DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
-            telemetry.addLine("Wait - Strafing left to park foundation");
+            telemetry.addLine("Wait - Moving to line up with a block");
             driveTrainTelemetry();
             telemetry.update();
             if (Kill(28)) {
@@ -96,14 +120,9 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
             }
         }
 
-
-        clawServoLeft.goToPosition(CLAW_SERVO_LEFT_UP,.02);
-        clawServoRight.goToPosition(CLAW_SERVO_RIGHT_UP,.02);
-
-
-        driveTrain.goStraightToTarget(-48, DRIVE_TRAIN_DEFAULT_SPEED);
+        driveTrain.StrafeLeftToTarget(72, DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
-            telemetry.addLine("Wait - Moving to park area");
+            telemetry.addLine("Strafing Left to foundation");
             driveTrainTelemetry();
             telemetry.update();
             if (Kill(28)) {
@@ -111,7 +130,48 @@ public class Auto_Blue_Grab_Foundation extends AutoLinearAbstract {
             }
         }
 
+        scissorLift.goToAbsoluteDistance(4000,.5);
 
+        while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
+            telemetry.addLine("XXX");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
+
+        driveTrain.goStraightToTarget(18, DRIVE_TRAIN_DEFAULT_SPEED);
+        while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
+            telemetry.addLine("Wait - Moving to line up with a block");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
+
+        boxGrabber.goToPosition(BOX_GRABBER_OPEN,.003);
+
+        driveTrain.goStraightToTarget(-10, DRIVE_TRAIN_DEFAULT_SPEED);
+        while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
+            telemetry.addLine("Wait - Moving to line up with a block");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
+
+        driveTrain.StrafeRightToTarget(30, DRIVE_TRAIN_DEFAULT_SPEED);
+        while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
+            telemetry.addLine("Strafing Left to foundation");
+            driveTrainTelemetry();
+            telemetry.update();
+            if (Kill(28)) {
+                break;
+            }
+        }
 
     }
 }

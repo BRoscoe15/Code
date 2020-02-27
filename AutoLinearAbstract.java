@@ -86,14 +86,21 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
             DRIVE_TRAIN_PIVOT_SPEED = 0.2,
             DRIVE_TRAIN_DEFAULT_SPEED = 0.35,
             DRIVE_TRAIN_STRAIGHT_SPEED = 0.6,
+            SCISSOR_LIFT_PICK_POS = 325,
+            SCISSOR_LIFT_CARRY_HEIGHT = 500,
+            SCISSOR_LIFT_POS = 900,
+            SCISSOR_LIFT_POSITION_ERROR = 100,
+            BOX_MOVER_PICK_POS_OUT = 7700,
+            BOX_MOVER_POSITION_ERROR = 100,
 
             BOX_GRABBER_CLOSED = 0.52,
             BOX_GRABBER_OPEN = 0.7,
-            BOX_MOVER_OUT = 4250,
+            BOX_GRABBER_INC = .02,
+            BOX_MOVER_OUT = 10500,
             BOX_MOVER_IN = 0,
             BOX_MOVER_INIT_POS = 0.50,
             SCISSOR_DOWN_POS = 0,
-            SCISSOR_UP_POS = 18950,
+            SCISSOR_UP_POS = 12500,
             CLAW_SERVO_LEFT_UP = 0.55,
             CLAW_SERVO_LEFT_DOWN = 0.95,
             CLAW_SERVO_RIGHT_UP = 0.47,
@@ -127,7 +134,7 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
 
         /* Target-Motor constructor: hardwareMap, motor name, motor direction,
                               encoder counts per output shaft revolution, gear ratio, wheel radius */
-        scissorLift = new DeviceTargetMotor(hardwareMap,"scissor_lift",REVERSE,1680,1);
+        scissorLift = new DeviceTargetMotor(hardwareMap,"scissor_lift",FORWARD,1680);
 
         boxMover = new DeviceTargetMotor(hardwareMap,"box_mover",REVERSE,1120);
 
