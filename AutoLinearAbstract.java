@@ -30,6 +30,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -70,6 +72,9 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
             clawServoRight;
 
 
+    DigitalChannel liftSafetySwitch;
+
+    boolean safeStop;
 
     ElapsedTime
             generalTimer = new ElapsedTime(), // General/multipurpose timer
@@ -127,6 +132,13 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
         /* INITIALIZE ROBOT - ESTABLISH ROBOT OBJECTS */
 
         // Noti.update();
+
+        // get a reference to our digitalTouch object.
+        liftSafetySwitch = hardwareMap.get(DigitalChannel.class, "lift_safety_switch");
+
+        // set the digital channel to input.
+        liftSafetySwitch.setMode(DigitalChannel.Mode.INPUT);
+        safeStop = false;
 
         /* Drive Train constructor: hardwareMap, left motor name, left motor direction, right motor name, right motor direction,
                                     encoder counts per output shaft revolution, gear ratio, wheel radius */
@@ -245,12 +257,36 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
         telemetry.addData(" Position in Counts", motor.targetMotor.getCurrentPosition());
 }
 
+    void motorTelemetry (DeviceTargetMotor motor) {
+        telemetry.addLine();
+        telemetry.addLine(motor.name);
+        telemetry.addData(" Position in EU", "%.2f EU ", motor.getPosition());
+        telemetry.addData(" Position in Counts", motor.targetMotor.getCurrentPosition());
+    }
+
+    void DigitalSwitchStatus (DigitalChannel DSW) {
+        telemetry.addLine();
+        telemetry.addLine(DSW.getDeviceName());
+        if (DSW.getState()) {
+            telemetry.addLine("Switch is Open");
+        }
+        else
+            telemetry.addLine("Switch is Closed");
+    }
+
     boolean Kill ( double autoTime) {
         boolean eStop;
-        if(!opModeIsActive() || autoTimer.seconds()>= autoTime) {
+
+        if (liftSafetySwitch.getState() == false) {
+            safeStop = true;
+        }
+
+        if(!opModeIsActive() || autoTimer.seconds()>= autoTime || safeStop) {
 
             driveTrain.stop();
             scissorLift.stop();
+            boxMover.goToAbsoluteDistance(0,.3);
+            scissorLift.goToAbsoluteDistance(0,.3);
 
             eStop = true;
 
@@ -258,10 +294,23 @@ public abstract class AutoLinearAbstract extends LinearOpMode {
         else
             eStop = false;
 
+        while (!boxMover.isMoveDone(BOX_MOVER_POSITION_ERROR) || !scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
+            telemetry.addLine("Safe Stopping lift");
+            telemetry.update();
+        }
+
+
         return eStop;
 
 
-
     }
+
+    void TelemetryRobot () {
+        driveTrainTelemetry();
+        motorTelemetry(scissorLift);
+        motorTelemetry(boxMover);
+        DigitalSwitchStatus(liftSafetySwitch);
+    }
+
 
 }

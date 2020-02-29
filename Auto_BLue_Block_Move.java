@@ -56,7 +56,8 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         scissorLift.goToAbsoluteDistance(SCISSOR_LIFT_POS, .3);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Strafing right to find skystone");
-            driveTrainTelemetry();
+            TelemetryRobot();
+            DigitalSwitchStatus(liftSafetySwitch);
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -74,7 +75,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.goStraightToTarget(15.5, DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Moving forward out of the way");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -84,7 +85,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
 
         while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
             telemetry.addLine("Wait - Making sure the scissor lift is out");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -95,7 +96,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         boxMover.goToAbsoluteDistance(BOX_MOVER_PICK_POS_OUT, .3);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Strafing right while moving the box mover out");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -105,7 +106,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
 
         while (!boxMover.isMoveDone(BOX_MOVER_POSITION_ERROR)) {
             telemetry.addLine("Wait - Making sure the Box mover is out all the way");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -115,7 +116,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         scissorLift.goToAbsoluteDistance(SCISSOR_LIFT_PICK_POS, .3);
         while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
             telemetry.addLine("Wait - Lowering lift to pick");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -123,7 +124,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         }
 
         telemetry.addLine("Wait - Closing Gripper");
-        driveTrainTelemetry();
+        TelemetryRobot();
         telemetry.update();
         boxGrabber.goToPosition(BOX_GRABBER_CLOSED, BOX_GRABBER_INC);
 
@@ -131,7 +132,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         scissorLift.goToAbsoluteDistance(SCISSOR_LIFT_CARRY_HEIGHT,.3);
         while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
             telemetry.addLine("Wait - Raising scissor lift to carrying height");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -142,7 +143,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.StrafeLeftToTarget(28,DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Strafing right while moving the box mover out");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -153,7 +154,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.goStraightToTarget(70,DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Moving forward to the foundation");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -164,7 +165,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.StrafeRightToTarget(35,DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Strafing into the foundation");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -173,7 +174,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
 
         while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
             telemetry.addLine("Wait - Raising scissor lift to carrying height");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -188,7 +189,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.StrafeLeftToTarget(45,DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Strafing into the wall with the foundation");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -196,14 +197,14 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         }
 
         telemetry.addLine("Wait - Waiting for claws to lift");
-        driveTrainTelemetry();
+        TelemetryRobot();
         telemetry.update();
         clawServoLeft.goToPositionNow(CLAW_SERVO_LEFT_UP);
         clawServoRight.goToPosition(CLAW_SERVO_RIGHT_UP,.02);
 
         while (!boxMover.isMoveDone(BOX_MOVER_POSITION_ERROR)) {
             telemetry.addLine("Wait - Making sure the Box mover is out all the way");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -214,7 +215,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         scissorLift.goToAbsoluteDistance(SCISSOR_DOWN_POS, .3);
         while (!scissorLift.isMoveDone(SCISSOR_LIFT_POSITION_ERROR)) {
             telemetry.addLine("Wait - Lowering scissor lift so it does not hit the bridge");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
@@ -225,7 +226,7 @@ public class Auto_BLue_Block_Move extends AutoLinearAbstract {
         driveTrain.goStraightToTarget(-48, DRIVE_TRAIN_DEFAULT_SPEED);
         while (!driveTrain.isMoveDone(MAX_DRIVE_TRAIN_POSITION_ERROR_INCHES)) {
             telemetry.addLine("Wait - Moving to park area");
-            driveTrainTelemetry();
+            TelemetryRobot();
             telemetry.update();
             if (Kill(28)) {
                 break;
